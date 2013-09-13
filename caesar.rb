@@ -5,22 +5,22 @@ def caesar(word)
   keyword.each {|letter| index_array << alphabet.rindex(letter) }
   puts index_array.inspect
   
-  25.times do 
+  25.times do
     temp_array = []
     alphabet.rotate!
     index_array.each do |position|
-       temp_array << alphabet[position] 
+       temp_array << alphabet[position]
     end
     puts temp_array.join
   end
 end
 
 def caesar_index(decoded_keyword)
-  decoded_keyword = word.split(//)
+  decoded_keyword = decoded_keyword.split(//)
   alphabet = ("A".."Z").to_a
   index_array = []
   decoded_keyword.each {|letter| index_array << alphabet.rindex(letter) }
-  index_array
+  return index_array
 end
 
 keyword = "RLCOPY"
@@ -33,6 +33,7 @@ VIRONX WLNZ DVDXU, G NVFIFYAIB IAJ, WZOP PUMV ZLRT IK ZMYR CFPI."
 
 def vigenere(cipher, decoded_keyword)
   keyword_index = caesar_index(decoded_keyword)
+  puts keyword_index.inspect
   alphabet = ("A".."Z").to_a
   cipher_array = cipher.split(//)
   cipher_array.select! {|character| character =~ /\w/ }
@@ -40,16 +41,18 @@ def vigenere(cipher, decoded_keyword)
   cipher_array.each {|letter| cipher_position_array << alphabet.rindex(letter) }
   puts cipher_array.inspect
   puts cipher_position_array.inspect
-  cipher_position_array.map {|position| position + keyword_index.rotate!.first }
+  cipher_position_array.map {|position| position + keyword_index.rotate.first }
+   #keyword_index.rotate.first doesn't work like we think it should... not sure why
   puts cipher_position_array.inspect
   decoded_array = []
   cipher_position_array.each { |position| decoded_array << alphabet[position % 26] }
-  puts cipher_position_array.inspect
+  puts decoded_array.inspect
   #i don't know how to put the spaces/punctation back in before we join it back into a string
   #feel like there must be a way though
 end
 
-caesar_index(decoded_keyword)
+#caesar("RLCOPY")
+#puts caesar_index(decoded_keyword)
 vigenere(cipher, decoded_keyword)
 
 
